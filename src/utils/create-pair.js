@@ -26,7 +26,8 @@ const createTestAccount = async () => {
       `SECRET=${secret}\nPUBLIC_KEY=${publicKey}`
     );
 
-    console.log("SUCCESS! You have a new account :)");
+    console.log("SUCCESS! You have a new account 2 :)");
+    console.log("Public Key!", publicKey);
   } catch (error) {
     console.error("An error has occurred", error);
   }
