@@ -3,34 +3,33 @@ const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
 
-
 const pair = StellarSdk.Keypair.random();
 
 const createTestAccount = async () => {
-  
-    // Creamos nuestro par de llaves
+  // Creamos nuestro par de llaves
   const secret = pair.secret();
   const publicKey = pair.publicKey();
 
-  return {
-    secret,
-    publicKey
-  };
+  try {
+    // Solicitamos la activación de nuestra cuenta al friendbot de stellar
+    const response = await fetch(
+      `https://friendbot.stellar.org?addr=${publicKey}`
+    );
+
+    // Mostramos el resultado de la transacción
+    const responseJSON = await response.json();
+    console.log(responseJSON);
+
+    // Escribimos un archivo secreto con nuestras llaves
+    fs.writeFileSync(
+      path.join(__dirname, "../", ".env"),
+      `SECRET=${secret}\nPUBLIC_KEY=${publicKey}`
+    );
+
+    console.log("SUCCESS! You have a new account :)");
+  } catch (error) {
+    console.error("An error has occurred", error);
+  }
 };
 
-const activeTestAccount = async publicKey => {
-  // Solicitamos la activación de nuestra cuenta al friendbot de stellar
-  const response = await fetch(
-    `https://friendbot.stellar.org?addr=${publicKey}`
-  );
-
-  // Mostramos el resultado de la RESPUESTA
-  const responseJSON = await response.json();
-
-  return responseJSON;
-};
-
-export { createTestAccount, activeTestAccount };
-  
-  
-}
+createTestAccount();
