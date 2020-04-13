@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "create-pair": "node utils/create-pair.js",
-    "check-balance": "node utils/check-balance.js",
-    "check-recipient-balance": "node utils/check-recipient-balance.js",
-    "send-transaction": "node utils/send-transaction.js"
+    "create-pair": "node src/utils/create-pair.js",
+    "check-balance": "node src/utils/check-balance.js",
+    "check-recipient-balance": "node src/utils/check-recipient-balance.js",
+    "send-transaction": "node src/utils/send-transaction.js"
   },
   "keywords": [],
   "author": "",
