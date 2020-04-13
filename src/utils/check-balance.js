@@ -15,13 +15,14 @@ const checkBalance = async () => {
   console.log("dentro de checkbalance: Public key", process.env.PUBLIC_KEY);
   
   //const account = await server.loadAccount(process.env.PUBLIC_KEY);
+  const account = await server.loadAccount("GDSP3DW7A5MOFP67SVBNAHCMPPNCBVKPMHIX6AIFDZPSIXYYBPVNXF5N");
 
-  console.log("Balances for account: " + process.env.PUBLIC_KEY);
+  console.log("Balances for account: GDSP3DW7A5MOFP67SVBNAHCMPPNCBVKPMHIX6AIFDZPSIXYYBPVNXF5N");
 
   // Checamos cada una de las cuentas y su balance
-  //account.balances.forEach(balance => {
-  //  console.log("Type:", balance.asset_type, ", Balance:", balance.balance);
-  //});
+  account.balances.forEach(balance => {
+    console.log("Type:", balance.asset_type, ", Balance:", balance.balance);
+  });
 };
 
 checkBalance();
