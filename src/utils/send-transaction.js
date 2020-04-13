@@ -1,10 +1,15 @@
-import StellarSdk from "stellar-sdk";
-
+// utils/send-transaction.js
+const StellarSdk = require("stellar-sdk");
 const server = new StellarSdk.Server("https://horizon-testnet.stellar.org");
+const dotenv = require("dotenv");
 
-const sendTransaction = async (secret, destination, amount) => {
+dotenv.config();
+
+const sourceKeys = StellarSdk.Keypair.fromSecret(process.env.SECRET);
+const destination = "GDC75JQ6SOC3EJU5FL2IO6JL5Y2HUEPZQBVAM2TESCLG5NMYPSX6JJRP";
+
+const sendTransaction = async () => {
   try {
-    const sourceKeys = StellarSdk.Keypair.fromSecret(secret);
     // Revisamos que la cuenta exista para evitar errores
     // y cobros innecesarios de comisiones
     await server.loadAccount(destination);
@@ -17,12 +22,12 @@ const sendTransaction = async (secret, destination, amount) => {
     })
       .addOperation(
         StellarSdk.Operation.payment({
-          destination,
+          destination: destination,
           // Dado que Stellar permite transacciones en diferentes
           // tipos de cambio, debes especificar la moneda en la que enviarás
           // El tipo "native" se refiere a Lumens (XLM)
           asset: StellarSdk.Asset.native(),
-          amount
+          amount: "10"
         })
       )
       // Espera un máximo de tres minutos por la transacción
@@ -33,11 +38,10 @@ const sendTransaction = async (secret, destination, amount) => {
     transaction.sign(sourceKeys);
     // Finalmente la enviamos a Stellar
     const result = await server.submitTransaction(transaction);
-
-    return result;
+    console.log("Success! Results:", result);
   } catch (err) {
     console.error("An error has occurred", err);
   }
 };
 
-export { sendTransaction };
+sendTransaction();
