@@ -16,6 +16,6 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0",
-    "stellar-sdk": "^4.1.0"
+    "stellar-sdk": "^8.2.3"
   }
 }
